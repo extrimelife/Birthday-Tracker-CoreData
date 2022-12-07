@@ -7,11 +7,11 @@
 
 import Foundation
 
-class StorageBirthday {
+class Birthday {
     
-    let firstName: String
-    let lastName: String
-    let birthDate: Date
+    var firstName: String
+    var lastName: String
+    var birthDate: Date
     
     init(firstName: String, lastName: String, birthDate: Date) {
         self.firstName = firstName
