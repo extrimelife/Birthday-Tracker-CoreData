@@ -76,6 +76,7 @@ class NewBirthdayController: UIViewController {
         textField.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         textField.font = UIFont.systemFont(ofSize: 15)
+        textField.autocorrectionType = .no
         return textField
     }
     
@@ -90,9 +91,10 @@ class NewBirthdayController: UIViewController {
             guard let firstName = textName.text else { return }
             guard let secondName = textLastName.text else { return }
             let date = date.date
-            let birthday = Birthday(firstName: firstName, lastName: secondName, birthDate: date)
-            delegate?.add(birthday)
-            dismiss(animated: true)
+            StorageManager.shared.create(firstName, secondName, date) { birthday in
+                delegate?.add(birthday)
+                dismiss(animated: true)
+            }
         }
     }
     

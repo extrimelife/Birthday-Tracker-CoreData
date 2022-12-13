@@ -15,7 +15,7 @@ final class BirthdayViewController: UIViewController {
     
     //MARK: - Private properties
     
-    private var birthdays = [Birthday]()
+    private var birthdays: [Birthday] = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -34,6 +34,7 @@ final class BirthdayViewController: UIViewController {
         setupLayout()
         setupNavigationController()
         makeBarButton()
+        fetchData()
     }
     
     //MARK: - Private methods
@@ -45,11 +46,10 @@ final class BirthdayViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            
         ])
     }
     
-    // Создаю кнопку + в NavigationBar
+    // Made button + в NavigationBar
     private func makeBarButton() {
         let buttonBar = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(actionTap))
         navigationItem.rightBarButtonItem = buttonBar
@@ -60,6 +60,17 @@ final class BirthdayViewController: UIViewController {
         birthdayController.delegate = self
         let navigation = UINavigationController(rootViewController: birthdayController)
         present(navigation, animated: true)
+    }
+    
+    private func fetchData() {
+        StorageManager.shared.fetchData { [unowned self] result in
+            switch result {
+            case .success(let birthday):
+                birthdays = birthday
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -75,7 +86,7 @@ extension BirthdayViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
         let birthday = birthdays[indexPath.row]
-        cell.setupSell(birthday)
+        cell.setupСell(birthday)
         tableView.rowHeight = 80
         return cell
     }
@@ -85,13 +96,25 @@ extension BirthdayViewController: UITableViewDataSource {
 
 extension BirthdayViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let birthday = birthdays.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            StorageManager.shared.delete(birthday)
+        }
+    }
 }
 
 
 //MARK: - NewBirthdayViewControllerDelegate
 
 extension BirthdayViewController: NewBirthdayViewControllerDelegate {
-    func add(_ birthday:Birthday) {
+    func add(_ birthday: Birthday) {
         birthdays.append(birthday)
         tableView.reloadData()
     }
@@ -101,7 +124,7 @@ extension BirthdayViewController: NewBirthdayViewControllerDelegate {
 
 extension BirthdayViewController {
     private func setupNavigationController() {
-        title = "Birthday days"
+        title = "Birthdays"
         navigationController?.navigationBar.prefersLargeTitles = true
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -109,8 +132,6 @@ extension BirthdayViewController {
         
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        
         navigationController?.navigationBar.tintColor = .black
-        
     }
 }

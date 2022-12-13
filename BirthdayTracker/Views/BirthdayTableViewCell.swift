@@ -37,10 +37,10 @@ final class TableViewCell: UITableViewCell {
     
     //MARK: - Public methods
     
-    func setupSell(_ birthday: Birthday) {
+    func setupСell(_ birthday: Birthday) {
         nameLabel.text = birthday.firstName
-        lastNameLabel.text = birthday.lastName
-        BirthdLabel.text = "\(birthday.birthDate)"
+        lastNameLabel.text = birthday.secondName
+        BirthdLabel.text = "\(birthday.birthDate ?? Date())"
         
     }
     
@@ -56,13 +56,13 @@ final class TableViewCell: UITableViewCell {
     private func setupLayout() {
         [nameLabel, lastNameLabel, BirthdLabel] .forEach { contentView.addSubview($0) }
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             
-            lastNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            lastNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             lastNameLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 5),
             
-            BirthdLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
+            BirthdLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             BirthdLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         ])
     }

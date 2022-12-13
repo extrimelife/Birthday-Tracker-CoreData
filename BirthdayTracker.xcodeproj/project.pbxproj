@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B73812EE286398BB00BDEF36 /* BirthdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73812ED286398BB00BDEF36 /* BirthdayTableViewCell.swift */; };
-		B75B0193285A59BD005A9805 /* Birthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B0192285A59BD005A9805 /* Birthday.swift */; };
 		B76A079B285B983B006A984C /* IdentifierForTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76A079A285B983B006A984C /* IdentifierForTableView.swift */; };
+		B7720AA42941B54500E711F5 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7720AA32941B54500E711F5 /* StorageManager.swift */; };
 		B7775E43284FD43D008100E2 /* NewBirthdayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7775E42284FD43D008100E2 /* NewBirthdayController.swift */; };
 		B7F14855284E740E00A0DD0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F14854284E740E00A0DD0D /* AppDelegate.swift */; };
 		B7F14857284E740E00A0DD0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F14856284E740E00A0DD0D /* SceneDelegate.swift */; };
@@ -21,8 +21,8 @@
 
 /* Begin PBXFileReference section */
 		B73812ED286398BB00BDEF36 /* BirthdayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayTableViewCell.swift; sourceTree = "<group>"; usesTabs = 0; };
-		B75B0192285A59BD005A9805 /* Birthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Birthday.swift; sourceTree = "<group>"; };
 		B76A079A285B983B006A984C /* IdentifierForTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierForTableView.swift; sourceTree = "<group>"; };
+		B7720AA32941B54500E711F5 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		B7775E42284FD43D008100E2 /* NewBirthdayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBirthdayController.swift; sourceTree = "<group>"; };
 		B7F14851284E740E00A0DD0D /* BirthdayTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BirthdayTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7F14854284E740E00A0DD0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B7720AA22941B42E00E711F5 /* Storage Manager */ = {
+			isa = PBXGroup;
+			children = (
+				B7720AA32941B54500E711F5 /* StorageManager.swift */,
+			);
+			path = "Storage Manager";
+			sourceTree = "<group>";
+		};
 		B78F73AB293D8FE700866051 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,14 +69,6 @@
 				B76A079A285B983B006A984C /* IdentifierForTableView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		B78F73AD293D900D00866051 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				B75B0192285A59BD005A9805 /* Birthday.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		B78F73AE293D902B00866051 /* App */ = {
@@ -101,7 +101,7 @@
 			children = (
 				B78F73AB293D8FE700866051 /* ViewControllers */,
 				B78F73AC293D8FFD00866051 /* Views */,
-				B78F73AD293D900D00866051 /* Models */,
+				B7720AA22941B42E00E711F5 /* Storage Manager */,
 				B78F73AE293D902B00866051 /* App */,
 				B7F14860284E740F00A0DD0D /* Assets.xcassets */,
 				B7F14862284E740F00A0DD0D /* LaunchScreen.storyboard */,
@@ -181,9 +181,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B75B0193285A59BD005A9805 /* Birthday.swift in Sources */,
 				B73812EE286398BB00BDEF36 /* BirthdayTableViewCell.swift in Sources */,
 				B7F14859284E740E00A0DD0D /* BirthdaysViewController .swift in Sources */,
+				B7720AA42941B54500E711F5 /* StorageManager.swift in Sources */,
 				B76A079B285B983B006A984C /* IdentifierForTableView.swift in Sources */,
 				B7F14855284E740E00A0DD0D /* AppDelegate.swift in Sources */,
 				B7775E43284FD43D008100E2 /* NewBirthdayController.swift in Sources */,
