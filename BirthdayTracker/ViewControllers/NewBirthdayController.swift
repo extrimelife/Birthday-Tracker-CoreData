@@ -23,7 +23,7 @@ class NewBirthdayController: UIViewController {
         setupLabel(playceholder: "Фамилия")
     }()
     
-    private lazy var BirthdLabel: UILabel = {
+    private lazy var birthdLabel: UILabel = {
         setupLabel(playceholder: "Дата Рождения")
     }()
     
@@ -40,7 +40,6 @@ class NewBirthdayController: UIViewController {
         dateOfBirthday.translatesAutoresizingMaskIntoConstraints = false
         dateOfBirthday.datePickerMode = .date
         dateOfBirthday.preferredDatePickerStyle = UIDatePickerStyle.wheels
-        dateOfBirthday.maximumDate = Date()
         return dateOfBirthday
     }()
     
@@ -122,7 +121,7 @@ class NewBirthdayController: UIViewController {
     
     private func setupLayout() {
         view.backgroundColor = .white
-        [nameLabel, lastNameLabel, BirthdLabel, textName, textLastName, date].forEach { view.addSubview($0) }
+        [nameLabel, lastNameLabel, birthdLabel, textName, textLastName, date].forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
             nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -134,10 +133,10 @@ class NewBirthdayController: UIViewController {
             lastNameLabel.heightAnchor.constraint(equalToConstant: 21),
             lastNameLabel.widthAnchor.constraint(equalToConstant: 100),
             
-            BirthdLabel.topAnchor.constraint(equalTo: lastNameLabel.bottomAnchor, constant: 50),
-            BirthdLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            BirthdLabel.heightAnchor.constraint(equalToConstant: 21),
-            BirthdLabel.widthAnchor.constraint(equalToConstant: 200),
+            birthdLabel.topAnchor.constraint(equalTo: lastNameLabel.bottomAnchor, constant: 50),
+            birthdLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            birthdLabel.heightAnchor.constraint(equalToConstant: 21),
+            birthdLabel.widthAnchor.constraint(equalToConstant: 200),
             
             textName.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
             textName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -146,10 +145,10 @@ class NewBirthdayController: UIViewController {
             
             textLastName.topAnchor.constraint(equalTo: lastNameLabel.bottomAnchor, constant: 5),
             textLastName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            textLastName.bottomAnchor.constraint(equalTo: BirthdLabel.topAnchor, constant: -5),
+            textLastName.bottomAnchor.constraint(equalTo: birthdLabel.topAnchor, constant: -5),
             textLastName.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-            date.topAnchor.constraint(equalTo: BirthdLabel.bottomAnchor, constant: 10),
+            date.topAnchor.constraint(equalTo: birthdLabel.bottomAnchor, constant: 10),
             date.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             date.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
@@ -158,6 +157,7 @@ class NewBirthdayController: UIViewController {
 
 
 //MARK: - Extension NavigationBar
+
 extension NewBirthdayController {
     private func setupNavigationBar() {
         title = "Add Birthday"

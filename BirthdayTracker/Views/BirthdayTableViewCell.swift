@@ -23,6 +23,13 @@ final class TableViewCell: UITableViewCell {
         setupLabel()
     }()
     
+    private let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
     //MARK: - Override methods
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -40,7 +47,7 @@ final class TableViewCell: UITableViewCell {
     func setupСell(_ birthday: Birthday) {
         nameLabel.text = birthday.firstName
         lastNameLabel.text = birthday.secondName
-        BirthdLabel.text = "\(birthday.birthDate ?? Date())"
+        BirthdLabel.text = formatter.string(from: birthday.birthDate ?? Date())
         
     }
     

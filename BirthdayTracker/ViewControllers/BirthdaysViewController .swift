@@ -16,6 +16,16 @@ final class BirthdayViewController: UIViewController {
     //MARK: - Private properties
     
     private var birthdays: [Birthday] = []
+    private var filteredBirthday: [Birthday] = []
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -35,6 +45,7 @@ final class BirthdayViewController: UIViewController {
         setupNavigationController()
         makeBarButton()
         fetchData()
+        setupSearchBar()
     }
     
     //MARK: - Private methods
@@ -72,6 +83,15 @@ final class BirthdayViewController: UIViewController {
             }
         }
     }
+    
+    private func setupSearchBar() {
+        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.barTintColor = .white
+        definesPresentationContext = true
+        
+    }
 }
 
 // MARK: - TableViewDataSource
@@ -79,13 +99,13 @@ final class BirthdayViewController: UIViewController {
 extension BirthdayViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        birthdays.count
+        isFiltering ? filteredBirthday.count : birthdays.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier, for: indexPath) as! TableViewCell
-        let birthday = birthdays[indexPath.row]
+        let birthday = isFiltering ? filteredBirthday[indexPath.row] : birthdays[indexPath.row]
         cell.setupСell(birthday)
         tableView.rowHeight = 80
         return cell
@@ -133,5 +153,20 @@ extension BirthdayViewController {
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         navigationController?.navigationBar.tintColor = .black
+    }
+}
+
+//MARK: - UiSearchResultsUptading
+
+extension BirthdayViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContent(searchText: searchController.searchBar.text ?? "")
+    }
+    
+    func filterContent(searchText: String) {
+        filteredBirthday = birthdays.filter { birthay in
+            birthay.firstName?.lowercased().contains(searchText.lowercased()) ?? false
+        }
+        tableView.reloadData()
     }
 }
