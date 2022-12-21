@@ -52,8 +52,10 @@ class StorageManager {
         }
     }
     
-    func update(_ task: Birthday, newName: String) {
-        task.firstName = newName
+    func update(_ task: Birthday, name: String, surname: String) {
+        task.firstName = name
+        task.secondName = surname
+       // task.birthDate =
         saveContext()
     }
     

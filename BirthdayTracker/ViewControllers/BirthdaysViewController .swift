@@ -37,6 +37,13 @@ final class BirthdayViewController: UIViewController {
         return tableView
     }()
     
+    private let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
     //MARK: - Override methods
     
     override func viewDidLoad() {
@@ -117,6 +124,8 @@ extension BirthdayViewController: UITableViewDataSource {
 extension BirthdayViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let birthday = isFiltering ? filteredBirthday[indexPath.row] : birthdays[indexPath.row]
+        alertAction(birthday)
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
@@ -129,7 +138,6 @@ extension BirthdayViewController: UITableViewDelegate {
         }
     }
 }
-
 
 //MARK: - NewBirthdayViewControllerDelegate
 
@@ -168,5 +176,34 @@ extension BirthdayViewController: UISearchResultsUpdating {
             birthay.firstName?.lowercased().contains(searchText.lowercased()) ?? false
         }
         tableView.reloadData()
+    }
+}
+
+extension BirthdayViewController {
+    func alertAction(_ birthday: Birthday) {
+        let alert = UIAlertController(title: "Редактирование События!", message: "Вы точно хотите редактировать событие?", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "Save", style: .default) 
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        alert.addTextField { name in
+            name.text = birthday.firstName
+            name.placeholder = "Имя"
+        }
+        
+        alert.addTextField { surname in
+            surname.text = birthday.secondName
+            surname.placeholder = "Фамилия"
+        }
+        
+        alert.addTextField { [unowned self] birthData in
+            birthData.text = self.formatter.string(from: birthday.birthDate ?? Date())
+            birthData.placeholder = "Дата"
+        }
+        
+        present(alert, animated: true)
     }
 }
