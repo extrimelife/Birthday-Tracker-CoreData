@@ -127,7 +127,7 @@ extension BirthdayViewController: UITableViewDelegate {
         let birthday = isFiltering ? filteredBirthday[indexPath.row] : birthdays[indexPath.row]
         alertAction(birthday)
         tableView.deselectRow(at: indexPath, animated: true)
-        
+       
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -180,18 +180,28 @@ extension BirthdayViewController: UISearchResultsUpdating {
 }
 
 extension BirthdayViewController {
+
     func alertAction(_ birthday: Birthday) {
         let alert = UIAlertController(title: "Редактирование События!", message: "Вы точно хотите редактировать событие?", preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: "Save", style: .default) 
+        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] _ in
+            let nameAlert = alert.textFields?[0]
+            let surnameAlert = alert.textFields?[1]
+            let date = alert.textFields?[2]
+            let data = formatter.date(from: date?.text ?? "")
+            StorageManager.shared.update(birthday, name: nameAlert?.text ?? "", surname: surnameAlert?.text ?? "", data: data ?? Date())
+            
+            tableView.reloadData()
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
         
-        alert.addAction(okAction)
+        alert.addAction(saveAction)
         alert.addAction(cancelAction)
         alert.addTextField { name in
             name.text = birthday.firstName
             name.placeholder = "Имя"
+            
         }
         
         alert.addTextField { surname in
@@ -200,7 +210,7 @@ extension BirthdayViewController {
         }
         
         alert.addTextField { [unowned self] birthData in
-            birthData.text = self.formatter.string(from: birthday.birthDate ?? Date())
+            birthData.text = formatter.string(from: birthday.birthDate ?? Date())
             birthData.placeholder = "Дата"
         }
         
