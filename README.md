@@ -1,3 +1,3 @@
 # BirthdayTracker CoreData
-![photo](img/img1.png)
+![photo](img/ima.png)
 ![photo1](img/image2.png)
