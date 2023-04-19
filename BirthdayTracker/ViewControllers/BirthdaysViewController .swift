@@ -132,7 +132,7 @@ extension BirthdayViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let birthday = birthdays.remove(at: indexPath.row)
+            let birthday = isFiltering ? filteredBirthday.remove(at: indexPath.row) : birthdays.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             StorageManager.shared.delete(birthday)
         }
